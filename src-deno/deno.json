@@ -1,0 +1,25 @@
+{
+  "imports": {
+    "preact": "https://esm.sh/preact@10.28.2",
+    "preact/hooks": "https://esm.sh/preact@10.28.2/hooks",
+    "@tauri-apps/api/core": "npm:@tauri-apps/api@2.9.1/core"
+  },
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  },
+  "tasks": { 
+    "gui:clean": "deno eval \"try { Deno.removeSync('dist', { recursive: true }); } catch (e) {} Deno.mkdirSync('dist', { recursive: true });\"",
+    "gui:bundle": "deno bundle --platform browser --output dist/bundle.js src/main.ts",
+    "gui:copy": "deno eval \"Deno.copyFileSync('index.html', 'dist/index.html')\"",
+    "build-gui": "deno task gui:clean && deno task gui:bundle && deno task gui:copy",  
+    "start-gui": "deno task build-gui && deno run --allow-net --allow-read jsr:@std/http/file-server dist --port 4237",
+
+    "dev:clean": "deno eval \"try { Deno.removeSync('dist-temp', { recursive: true }); } catch (e) {} Deno.mkdirSync('dist-temp', { recursive: true });\"",
+    "dev:bundle": "deno bundle --platform browser --output dist-temp/bundle.js src/main.ts",
+    "dev:copy": "deno eval \"Deno.copyFileSync('index.html', 'dist-temp/index.html')\"",
+    "dev-gui": "deno task dev:clean && deno task dev:bundle && deno task dev:copy",   
+    "watch-gui": "deno run --allow-net --allow-read --allow-write --allow-run dev.ts" 
+  }
+}
