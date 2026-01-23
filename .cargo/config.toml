@@ -1,0 +1,7 @@
+# Konfiguracja kompilacji dla Windows (MSVC)
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+# Opcjonalnie dla wersji 32-bitowej, jeśli jej używasz:
+[target.i686-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

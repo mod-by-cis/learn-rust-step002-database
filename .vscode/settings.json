@@ -1,0 +1,19 @@
+{
+  "editor.tabSize": 2,
+  "explorer.sortOrder": "filesFirst",
+  "material-icon-theme.files.associations": {
+    "Cargo.toml": "settings",
+    "deno.json": "settings",
+    "deno.jsonc": "settings",
+    ".vscode/settings.json": "settings",
+    ".cargo/config.toml": "settings",
+    "Cargo.lock": "lock",
+    "deno.lock": "lock"
+  },
+  "material-icon-theme.folders.associations": {
+    "src-tauri": "src-tauri",
+    "src-rust": "rust",
+    "src-deno": "typescript",
+    ".cargo": "rust",
+  }
+}
