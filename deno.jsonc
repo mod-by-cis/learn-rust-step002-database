@@ -1,8 +1,0 @@
-{
-  "tasks": {
-    // --- INTERFEJS-GRAFICZNY ---
-    "GUI-dev": "deno task -c src-deno/deno.json watch-gui",
-    "GUI-build": "deno task -c src-deno/deno.json build-gui",
-    "GUI-preview": "deno task -c src-deno/deno.json start-gui"
-  }  
-}

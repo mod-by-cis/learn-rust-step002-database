@@ -1,19 +1,37 @@
 {
-  "editor.tabSize": 2,
-  "explorer.sortOrder": "filesFirst",
-  "material-icon-theme.files.associations": {
-    "Cargo.toml": "settings",
-    "deno.json": "settings",
-    "deno.jsonc": "settings",
-    ".vscode/settings.json": "settings",
-    ".cargo/config.toml": "settings",
-    "Cargo.lock": "lock",
-    "deno.lock": "lock"
-  },
-  "material-icon-theme.folders.associations": {
-    "src-tauri": "src-tauri",
-    "src-rust": "rust",
-    "src-deno": "typescript",
-    ".cargo": "rust",
-  }
+    "[json]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },    
+    "[html]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },  
+    "[ts]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },      
+    "[tsx]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },  
+    "[css]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },  
+    "[toml]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    },  
+    "[rs]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.semanticHighlighting.enabled": false
+    },
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.semanticHighlighting.enabled": false
+    },
+    "explorer.sortOrder": "filesFirst",
+    "editor.tabSize": 2,
+    "git.autofetch": true,
+    "workbench.iconTheme": "material-icon-theme",    
+    "workbench.colorTheme": "Orion",
+    "workbench.activityBar.location": "default"    
 }

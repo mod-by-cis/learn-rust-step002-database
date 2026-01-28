@@ -1,7 +1,82 @@
-[workspace]
-members = [
-    "src-rust"
-    #, 
-   # "src-tauri"
-]
-resolver = "2"
+# https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# ⚠️ Nazwy w Rust/Cargo mają ścisłe zasady nazewnictwa:
+# `mod name` - nazwy plików `*.rs` i folderów w których się znajdują; Nazwa pliku na dysku = Nazwa modułu w kodzie:
+#     🆗 Małe litery, cyfry, podkreślniki;           ⚠️ musi zaczynać się od litery lub podkreślenia;           🚫 bez spacji, bez dużych liter, bez myślników, oraz bez: kropek, nawiasów i innych znaków;
+# `[lib] name`:
+#     🆗 Małe litery, cyfry, podkreślniki;           ⚠️ musi zaczynać się od litery lub podkreślenia;           🚫 bez spacji, bez dużych liter, bez myślników, i bez innych znaków;
+# `[package] name`:
+#     🆗 Małe litery, cyfry, myślniki;               ⚠️ musi zaczynać się od litery;                            🚫 bez spacji, bez dużych liter, bez podkreśleń, i bez innych znaków;
+# `[[bin]] name`:
+#     🆗 Małe litery, cyfry, myślniki, podkreślniki; ⚠️ musi zaczynać się od litery lub cyfry lub podkreślenia; 🚫 bez spacji, bez dużych liter, i bez innych znaków;
+
+# 🌲 Sprawdzanie struktury projektu
+# `cargo install --git https://github.com/mod-by-cis/plot-path-tree-by-pattern --force`  -instaluje narzędzie do wyświetlania struktury folderów projektu;
+# `cargo plot-fs-tree -l "." -p "**/*.rs, !target/" --dir-first`              -wyświetla strukturę folderów projektu, pokazując tylko pliki `.rs` i ukrywając folder `target/`;
+
+# 🏗️ Sprawdzanie, Budowanie i Uruchamianie
+# 🏗️🔍 Sprawdzenie kodu bez budowy:
+#     `cargo check --bin dev_db`                  lub   `cargo check --bin dev_db_manager`                  - sprawdza kod pod kątem błędów bez budowy programu;
+#     `cargo clippy --bin dev_db`                 lub   `cargo clippy --bin dev_db_manager`                 - uruchamia narzędzie Clippy do analizy kodu i sugerowania poprawek;  
+#     `cargo clippy --release --bin dev_db`       lub   `cargo clippy --release --bin dev_db_manager`       - uruchamia Clippy w trybie release;
+#     `cargo fmt`                                                                                           - automatycznie formatuje kod (wcięcia, nawiasy)
+# 🏗️🔧 automatycznie naprawia niektóre problemy (⚠️zrób `commit` przed użyciem tego polecenia);
+#     `cargo fix --bin dev_db`                    lub   `cargo fix --bin dev_db_manager`                    - automatycznie naprawia niektóre problemy wykryte przez kompilator; 
+#     `cargo fix --release --bin dev_db`          lub   `cargo fix --release --bin dev_db_manager`          - automatycznie naprawia niektóre problemy wykryte przez kompilator w trybie release; 
+#     `cargo clippy --fix --bin dev_db`           lub   `cargo clippy --fix --bin dev_db_manager`           - automatycznie naprawia niektóre problemy wykryte przez Clippy; 
+#     `cargo clippy --release --fix --bin dev_db` lub   `cargo clippy --release --fix --bin dev_db_manager` - automatycznie naprawia niektóre problemy wykryte przez Clippy w trybie release; 
+# 🏗️⏩ (debug)   - rezultat w 📂`target/debug/`;   Szybka kompilacja, Wolniejszy program; 
+#     `cargo run --bin dev_db`                    lub   `cargo run --bin dev_db_manager`                    - buduje i uruchamia program w trybie debug;
+#     `cargo build --bin dev_db`                  lub   `cargo build --bin dev_db_manager`                  - buduje program w trybie debug;
+# 🏗️▶️ (release) - rezultat w 📂`target/release/`; Wolna kompilacja,  Szybszy program;    
+#     `cargo run --release --bin dev_db`          lub   `cargo run --release --bin dev_db_manager`          - buduje i uruchamia program w trybie release;
+#     `cargo build --release --bin dev_db`        lub   `cargo build --release --bin dev_db_manager`        - buduje program w trybie release;
+# 🏗️📡 Opcje sieciowe:
+#     `cargo run --offline --bin dev_db`          - uruchamia bez próby łączenia z internetem (korzysta z cache);
+
+# 🧹 Utrzymanie projektu:
+#     `cargo clean`                               - Usuwa folder `target/` (zwalnia miejsce, wymusza pełną rekompilację)
+#     `cargo update`                              - Aktualizuje wersje bibliotek w `Cargo.lock` (zgodnie z `Cargo.toml`)
+#     `cargo doc --open`                          - Generuje i otwiera dokumentację projektu (kodu i zależności) w przeglądarce; 
+#     `cargo doc --no-deps --open`                - Generuje i otwiera dokumentację projektu bez dokumentacji zależności;
+#     `cargo doc --document-private-items --open` - Generuje dokumentację TAKŻE dla funkcji prywatnych (świetne do nauki!);
+#     `cargo tree`                                - Wyświetla drzewo wszystkich bibliotek (kto używa kogo)
+#     `cargo tree -i tokio`                       - "Dlaczego mam w projekcie tokio?" (pokazuje ścieżkę zależności)
+#     `cargo add serde --features derive`         - Dodaje paczkę (z funkcjami) i wpisuje ją do tego pliku automagicznie
+#     `cargo remove serde`                        - Usuwa paczkę i czyści ten plik
+#     `cargo audit`                               - (wymaga: cargo install cargo-audit) Sprawdza czy biblioteki nie mają znanych luk bezpieczeństwa;
+
+# ➕ przydatne narzędzia 
+# `.\cmd\plotFS.ps1` -wyświetla strukture folderów projektu w konsoli PowerShell;
+
+[package]
+name = "learn-rust-step002-database-2" 
+version = "0.1.0"
+readme = "README.md"
+rust-version = "1.93.0"
+edition = "2024"
+resolver = "3"
+
+[lib]
+name = "my_libs" 
+path = "src/lib.rs"
+
+# niepotrzebne bo domyślnie szuka src/main.rs lub src/bin/<nazwa>.rs
+# [[bin]]
+
+[dependencies]
+# Baza danych SurrealDB w trybie embedded (SurrealKV)
+surrealdb = { version = "2.6.0", features = ["kv-surrealkv"] }
+
+# Runtime asynchroniczny (niezbędny dla SurrealDB)
+tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
+
+# Serializacja danych (zmienia struktury Rust <-> JSON/Surreal)
+serde = { version = "1.0.228", features = ["derive"] }
+
+# Generowanie ID. v7 jest świetne do baz danych (sortowalne po czasie).
+uuid = { version = "1.20.0", features = ["v4", "v7", "serde"] }
+
+# 👇 DO ZARZĄDZANIA KONFIGURACJĄ I MENU
+toml = "0.9.11"
+inquire = "0.9.2"

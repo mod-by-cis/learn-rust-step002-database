@@ -1,20 +1,7 @@
 /target
-temp/
 
 
-# Android secrets
-**/*.keystore
-**/key.properties
-# prywatny klucz
-# src-tauri/gen/android/app/kalkulator.keystore
-# Plik z hasłami do klucza
-# src-tauri/gen/android/key.properties
-
-# Folder tymczasowy Gradle
-# src-tauri/gen/android/.gradle/
-# (Wyniki kompilacji/APK)
-# src-tauri/gen/android/app/build/
-# Android build artifacts
-src-tauri/gen/android/.gradle/
-src-tauri/gen/android/app/build/
-src-tauri/gen/android/local.properties
+/data/data.toml
+/data/data_current.toml
+/data/*/**/*.manifest
+/data/*/**/*.clog
