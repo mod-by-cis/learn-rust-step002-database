@@ -7,7 +7,7 @@ use std::path::PathBuf;
 use my_libs::config::ConfigManager;
 use my_libs::consts::DATA_FOLDER;
 use my_libs::consts::msg;
-use my_libs::utils::{open_terminal_window, kill_process};
+use my_libs::utils::{kill_process, open_terminal_window};
 
 #[tokio::main]
 async fn main() {

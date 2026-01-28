@@ -51,5 +51,4 @@ pub mod msg {
     pub const MENU_EXIT: &str = "❌ [WYJŚCIE]";
 
     pub const CANCELLED: &str = "Anulowano.";
-    
 }

@@ -2,9 +2,9 @@
 
 use serde::{Serialize, de::DeserializeOwned};
 use std::fs;
+use std::io::{self, Write};
 use std::path::Path;
 use std::process::Command;
-use std::io::{self, Write};
 
 // 📚 EDU (Generics):
 // <T> - To oznacza "Dla dowolnego typu T" (jak w TypeScript).
@@ -77,11 +77,11 @@ pub fn open_terminal_window(bin_name: &str) {
         // 3. "Start-Process pwsh" -> Otwiera NOWE okno z PowerShellem.
         // 4. "-ArgumentList" -> Przekazuje parametry do tego nowego okna.
         // 5. "-NoExit" -> KLUCZOWE: Nie zamykaj okna po wykonaniu (odpowiednik cmd /K).
-        
+
         let ps_command = format!(
-            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}; if ($LASTEXITCODE -eq 0) {{ exit }}'", 
-            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}'", 
-            "Start-Process pwsh -ArgumentList '-Command', 'cargo run --release --bin {}'", 
+            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}; if ($LASTEXITCODE -eq 0) {{ exit }}'",
+            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}'",
+            "Start-Process pwsh -ArgumentList '-Command', 'cargo run --release --bin {}'",
             bin_name
         );
 
@@ -115,7 +115,7 @@ pub fn kill_process(bin_name: &str) {
     #[cfg(target_os = "windows")]
     {
         let process_name = format!("{}.exe", bin_name);
-        
+
         // Uruchamiamy taskkill
         // /F - Force (wymuś zamknięcie)
         // /IM - Image Name (nazwa pliku obrazu)
@@ -123,7 +123,7 @@ pub fn kill_process(bin_name: &str) {
         let _ = Command::new("taskkill")
             .args(["/F", "/IM", &process_name, "/T"])
             .output(); // .output() czeka na wykonanie, ale ignorujemy wynik (czy się udało czy nie)
-            
+
         println!("💀 Wysłano sygnał zamknięcia dla {}", process_name);
     }
 
