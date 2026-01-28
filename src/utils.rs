@@ -79,7 +79,9 @@ pub fn open_terminal_window(bin_name: &str) {
         // 5. "-NoExit" -> KLUCZOWE: Nie zamykaj okna po wykonaniu (odpowiednik cmd /K).
         
         let ps_command = format!(
-            "Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}; if ($LASTEXITCODE -eq 0) {{ exit }}'", 
+            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}; if ($LASTEXITCODE -eq 0) {{ exit }}'", 
+            //"Start-Process pwsh -ArgumentList '-NoExit', '-Command', 'cargo run --release --bin {}'", 
+            "Start-Process pwsh -ArgumentList '-Command', 'cargo run --release --bin {}'", 
             bin_name
         );
 
