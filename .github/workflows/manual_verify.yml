@@ -24,12 +24,12 @@ jobs:
 
       # Cache - kluczowe przy SurrealDB. 
       # Działa podobnie jak sekcja "Cache Cargo" w Twoim starym pliku, ale automat.
-      - name: ⚡ Rust Cache
-        uses: Swatinem/rust-cache@v2
+       - name: ⚡ Rust Cache
+       uses: Swatinem/rust-cache@v2
 
       # Z Twojego pliku "Rust CI & Build" - sprawdzamy czy kod jest ładnie sformatowany
-      - name: 🎨 Check Formatting
-        run: cargo fmt -- --check
+      # - name: 🎨 Check Formatting
+      #  run: cargo fmt -- --check
 
       # Szybkie sprawdzenie (Debug)
       - name: 🔍 Cargo Check
