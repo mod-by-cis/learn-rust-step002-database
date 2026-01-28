@@ -1,6 +1,5 @@
-name: Manual Rust Verification 🛠️
+name: Verify CLI Branch (Manual) 🛠️
 
-# To sprawia, że workflow uruchamia się TYLKO ręcznie przyciskiem
 on:
   workflow_dispatch:
 
@@ -9,52 +8,48 @@ env:
 
 jobs:
   verify-windows:
-    name: Check & Build (Windows)
-    runs-on: windows-latest  # Ważne: używamy Windowsa, bo masz kod specyficzny dla tego OS
+    name: Build & Check (Windows)
+    # W Twoim przykładzie "Deploy Release" używałeś windows-latest - trzymamy się tego.
+    runs-on: windows-latest
 
     steps:
-      - name: 📥 Pobranie kodu (Checkout)
+      - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🦀 Instalacja Rust
+      # Instalacja Rusta (Stable)
+      - name: 🦀 Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          components: clippy
+          components: clippy, rustfmt
 
-      - name: ⚡ Cache (Przyspieszenie budowania)
-        # To kluczowe przy SurrealDB - pierwsze uruchomienie potrwa długo,
-        # kolejne będą brały skompilowane biblioteki z cache'a.
+      # Cache - kluczowe przy SurrealDB. 
+      # Działa podobnie jak sekcja "Cache Cargo" w Twoim starym pliku, ale automat.
+      - name: ⚡ Rust Cache
         uses: Swatinem/rust-cache@v2
 
-      # 1. Szybkie sprawdzenie (Debug)
+      # Z Twojego pliku "Rust CI & Build" - sprawdzamy czy kod jest ładnie sformatowany
+      - name: 🎨 Check Formatting
+        run: cargo fmt -- --check
+
+      # Szybkie sprawdzenie (Debug)
       - name: 🔍 Cargo Check
         run: cargo check
 
-      # 2. Szybkie sprawdzenie (Release)
-      - name: 🔍 Cargo Check (Release)
-        run: cargo check --release
-
-      # 3. Clippy - Twój strażnik jakości (Debug)
-      # -D warnings sprawia, że warningi są traktowane jak błędy (failuje build)
+      # Linter (Clippy) - wyłapie błędy zanim poświęcisz czas na długie budowanie
       - name: 📎 Cargo Clippy
         run: cargo clippy -- -D warnings
 
-      # 4. Clippy (Release)
-      - name: 📎 Cargo Clippy (Release)
-        run: cargo clippy --release -- -D warnings
-
-      # 5. Budowanie (To potrwa najdłużej)
+      # Budowanie wersji Release (najdłuższy etap)
       - name: 🏗️ Cargo Build (Release)
         run: cargo build --release --verbose
 
-      # OPCJONALNIE: Jeśli chcesz móc pobrać zbudowane pliki exe z GitHuba
-      - name: 📤 Upload Artifacts (Exe Files)
+      # Pakowanie artefaktów (na wzór Twojego "Upload Windows Artifact")
+      # Ale zmienione tak, by łapało OBA pliki exe
+      - name: 📤 Upload Binaries
         uses: actions/upload-artifact@v4
         with:
-          name: windows-binaries
+          name: arboretum-windows-build
           path: |
             target/release/manager.exe
             target/release/editor.exe
-            target/release/*.dll
-            target/release/*.pdb
           if-no-files-found: warn
