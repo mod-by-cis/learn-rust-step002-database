@@ -7,7 +7,7 @@ use std::path::PathBuf;
 use my_libs::config::ConfigManager;
 use my_libs::consts::DATA_FOLDER;
 use my_libs::consts::msg;
-use my_libs::utils::open_terminal_window;
+use my_libs::utils::{open_terminal_window, kill_process};
 
 #[tokio::main]
 async fn main() {
@@ -75,6 +75,8 @@ async fn main() {
         for name in db_names {
             menu_items.push(format!("📂 {}", name));
         }
+        let kill_option = "💀 ZAMKNIJ OTWARTEGO EDYTORA".to_string();
+        menu_items.push(kill_option.clone());
         menu_items.push(msg::MENU_EXIT.to_string());
 
         let selection = Select::new(msg::ASK_SELECT_ACTION, menu_items)
@@ -84,6 +86,12 @@ async fn main() {
 
         match selection.as_str() {
             val if val == msg::MENU_EXIT => break, // Wychodzimy z pętli loop -> koniec programu
+
+            val if val == kill_option => {
+                kill_process("editor");
+                // Mała pauza, żebyś zdążył zobaczyć komunikat w konsoli
+                std::thread::sleep(std::time::Duration::from_millis(1500));
+            }
 
             val if val == msg::MENU_NEW_DB => {
                 let new_name = Text::new(msg::ASK_DB_NAME).prompt().unwrap();

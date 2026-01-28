@@ -109,3 +109,26 @@ pub fn wait_for_enter() {
     let mut buffer = String::new();
     io::stdin().read_line(&mut buffer).unwrap_or_default();
 }
+
+/// Zabija proces o podanej nazwie (np. "editor")
+pub fn kill_process(bin_name: &str) {
+    #[cfg(target_os = "windows")]
+    {
+        let process_name = format!("{}.exe", bin_name);
+        
+        // Uruchamiamy taskkill
+        // /F - Force (wymuś zamknięcie)
+        // /IM - Image Name (nazwa pliku obrazu)
+        // /T - Tree (zabij też procesy potomne, jeśli jakieś stworzył)
+        let _ = Command::new("taskkill")
+            .args(["/F", "/IM", &process_name, "/T"])
+            .output(); // .output() czeka na wykonanie, ale ignorujemy wynik (czy się udało czy nie)
+            
+        println!("💀 Wysłano sygnał zamknięcia dla {}", process_name);
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        println!("⚠️ Zabijanie procesów zaimplementowane tylko dla Windows.");
+    }
+}
