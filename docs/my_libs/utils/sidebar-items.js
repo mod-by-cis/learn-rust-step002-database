@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["kill_process","load_toml","open_terminal_window","save_toml","wait_for_enter"]};

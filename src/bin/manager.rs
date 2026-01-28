@@ -62,6 +62,13 @@ async fn main() {
     config.current_data_path = Some(data_path_str.clone());
     ConfigManager::save_global_config(&config);
 
+    // 🌲 3. PRZEKAZANIE DO PĘTLI
+    // Main kończy swoją pracę tutaj, oddając sterowanie do funkcji pętli
+    run_manager_loop(data_path).await;
+}
+
+/// 🔄 Pętla życia Managera
+async fn run_manager_loop(data_path: PathBuf) {
     // --- KROK 2: Pętla Menu Głównego ---
     loop {
         // Ładujemy listę baz (automatycznie czyści śmieci)

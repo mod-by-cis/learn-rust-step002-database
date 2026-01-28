@@ -1,0 +1,2 @@
+createSrcSidebar('[["editor",["",[],["editor.rs"]]],["manager",["",[],["manager.rs"]]],["my_libs",["",[["api",[],["mod.rs","model.rs"]],["config",[],["mod.rs"]],["db",[["cmd",[],["create.rs","mod.rs"]]],["connect.rs","mod.rs","read.rs"]],["ui",[],["mod.rs"]]],["consts.rs","lib.rs","utils.rs"]]]]');
+//{"start":19,"fragment_lengths":[32,35,209]}
