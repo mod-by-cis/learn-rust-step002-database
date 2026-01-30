@@ -1,0 +1,33 @@
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    title: "Genealogia - Edytor";
+    width: 400px;
+    height: 300px;
+
+    VerticalBox {
+        Text {
+            text: "Witaj w Bazie Genealogicznej!";
+            font-size: 24px;
+            horizontal-alignment: center;
+        }
+
+        Text {
+            text: "Wpisz nazwisko:";
+        }
+
+        input := LineEdit {
+            placeholder-text: "Np. Kowalski";
+        }
+
+        Button {
+            text: "Szukaj w bazie";
+            clicked => {
+                root.szukaj-klik(input.text);
+            }
+        }
+    }
+
+    // Sygnał, który odbierzemy w Ruście
+    callback szukaj-klik(string);
+}
