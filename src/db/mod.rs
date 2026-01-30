@@ -1,5 +1,7 @@
-pub mod cmd;
-pub mod connect;
-pub mod read;
-// pub mod read; // To dodamy w kolejnym kroku, na razie zakomentowane
-// pub mod cmd;  // To dodamy w kolejnym kroku
+// src/db/mod.rs
+
+pub mod connect; // uniwersalne łączenie z bazą 
+
+// ❌ Wyłączamy stare operacje na Kocie
+// pub mod read; 
+// pub mod cmd;  

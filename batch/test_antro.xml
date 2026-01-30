@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Antroponomastykon version="1.0" author="Jan Genealog">
+
+    <Concept id="1" category="givenname" origin="hebrew" gender="Male">
+        
+        <Lexeme glottolog="stan1293" lemma="Jan" type="standard">
+            <Case case="Nom" number="Sing" ipa="/jan/">Jan</Case>
+            <Case case="Gen" number="Sing" ipa="/jana/">Jana</Case>
+            <Case case="Dat" number="Sing" ipa="/janɔvi/">Janowi</Case>
+            <Case case="Voc" number="Sing" ipa="/jaɲɛ/">Janie</Case>
+        </Lexeme>
+
+        <Lexeme glottolog="lati1261" lemma="Johannes" type="standard">
+            <Case case="Nom" number="Sing" ipa="/joˈannes/">Johannes</Case>
+            <Case case="Acc" number="Sing" ipa="/joˈannem/">Joannem</Case>
+        </Lexeme>
+
+        <Lexeme glottolog="sile1253" lemma="Jōn" type="standard">
+            <Case case="Nom" number="Sing" ipa="/joːn/">Jōn</Case>
+            <Case case="Dat" number="Sing" ipa="/joːnɔvi/">Jōnkowi</Case>
+        </Lexeme>
+
+    </Concept>
+
+    <Concept id="2" category="surname" origin="topographic" gender="Unknown">
+        <Lexeme glottolog="stan1293" lemma="Cisowski" gender="Male">
+             <Case case="Nom" number="Sing" ipa="/tɕiˈsɔfski/">Cisowski</Case>
+             <Case case="Nom" number="Plur" ipa="/tɕiˈsɔfst͡sɨ/">Cisowscy</Case>
+        </Lexeme>
+
+        <Lexeme glottolog="stan1293" lemma="Cisowska" gender="Female">
+             <Case case="Nom" number="Sing" ipa="/tɕiˈsɔfska/">Cisowska</Case>
+        </Lexeme>
+        
+        <Lexeme glottolog="deu" lemma="Tyssowski" origin="germanized">
+             <Case case="Nom" number="Sing">Tyssowski</Case>
+        </Lexeme>
+    </Concept>
+
+    <Concept id="3" category="surname" gender="Unknown">
+        
+        <Lexeme glottolog="stan1293" lemma="Kupaga" gender="Male">
+            <Case case="Nom" number="Sing">Kupaga</Case>
+        </Lexeme>
+
+        <Lexeme glottolog="stan1293" lemma="Kupagowa" gender="Female" function="wife">
+            <Case case="Nom" number="Sing">Kupagowa</Case>
+            <Case case="Acc" number="Sing">Kupagową</Case>
+        </Lexeme>
+
+        <Lexeme glottolog="stan1293" lemma="Kupagówna" gender="Female" function="daughter">
+            <Case case="Nom" number="Sing">Kupagówna</Case>
+        </Lexeme>
+
+    </Concept>
+
+    <Concept id="4" category="nickname" gender="Male">
+        <Lexeme glottolog="stan1293" lemma="Śmiały">
+            <Case case="Nom" number="Sing">Śmiały</Case>
+            <Case case="Gen" number="Sing">Śmiałego</Case>
+        </Lexeme>
+    </Concept>
+
+</Antroponomastykon>

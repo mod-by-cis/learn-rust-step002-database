@@ -50,7 +50,7 @@
 # `.\cmd\plotFS.ps1` -wyświetla strukture folderów projektu w konsoli PowerShell;
 
 [package]
-name = "learn-rust-step002-database-2" 
+name = "arboretum" 
 version = "0.1.0"
 readme = "README.md"
 rust-version = "1.93.0"
@@ -77,6 +77,15 @@ serde = { version = "1.0.228", features = ["derive"] }
 # Generowanie ID. v7 jest świetne do baz danych (sortowalne po czasie).
 uuid = { version = "1.20.0", features = ["v4", "v7", "serde"] }
 
-# 👇 DO ZARZĄDZANIA KONFIGURACJĄ I MENU
-toml = "0.9.11"
+#  DO ZARZĄDZANIA  MENU???
 inquire = "0.9.2"
+
+# Praser plików .toml i .xml
+toml = "0.9.11"
+quick-xml = {"version" = "0.39.0", features = ["serialize"]}
+
+# do obsługi CLI
+clap = {"version" = "4.5.56", features = ["derive"]}
+thiserror = "2.0.18"
+colored = "3.1.1"
+

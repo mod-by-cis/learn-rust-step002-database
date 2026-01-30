@@ -1,3 +1,4 @@
+/*
 // src/bin/manager.rs (Dawniej dev_db_manager)
 
 use inquire::{Confirm, Select, Text};
@@ -126,3 +127,5 @@ async fn run_manager_loop(data_path: PathBuf) {
         }
     }
 }
+
+*/

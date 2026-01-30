@@ -9,6 +9,11 @@ use std::fs; // System plików
 // use std::path::{Path, PathBuf};
 use std::path::Path;
 
+use crate::consts::{
+    // CONFIG_FILE, CONFIG_FOLDER, DATA_FOLDER, 
+    DB_NAME, DB_NAMESPACE // 👈 UPEWNIJ SIĘ, ŻE TE SĄ
+};
+
 // 🧩 Moduły własne (nasze lokalne importy)
 // ⚠️ Poprawka: DatabaseConnection jest teraz w db::connect, nie w db::Database
 use crate::db::connect::DatabaseConnection;
@@ -122,7 +127,7 @@ impl ConfigManager {
         let db_path_str = db_path.to_str().unwrap();
 
         // ⚠️ Poprawka: Używamy DatabaseConnection, a nie Database
-        let _temp_conn = DatabaseConnection::init(db_path_str).await?;
+        let _temp_conn = DatabaseConnection::init(db_path_str, DB_NAMESPACE, DB_NAME).await?;
         // Zmienna _temp_conn tutaj "umiera" (jest dropowana), co zamyka połączenie i zwalnia plik.
 
         // 3. Aktualizacja indeksu

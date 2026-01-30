@@ -1,9 +1,13 @@
 // src/lib.rs
 
-pub mod api;
-pub mod config;
 pub mod consts;
+pub mod utils;
+pub mod config;
+pub mod domain;
 pub mod db;
 pub mod ui;
-pub mod utils;
+
+
+// ❌ STARE (Wyłączamy Kota)
+// pub mod api;
 // pub mod logic;
