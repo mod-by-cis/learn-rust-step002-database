@@ -1,33 +1,137 @@
-import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+import { Button, VerticalBox, HorizontalBox, LineEdit } from "std-widgets.slint";
 
-export component AppWindow inherits Window {
-    title: "Genealogia - Edytor";
-    width: 400px;
-    height: 300px;
+// Definiujemy własny styl przycisku
+component MenuButton inherits Rectangle {
+    in-out property <string> btn-text;
+    callback clicked;
+    
+    background: touch.pressed ? #1a354a : touch.has-hover ? #2a5678 : #20415a;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    animate background { duration: 150ms; }
 
-    VerticalBox {
-        Text {
-            text: "Witaj w Bazie Genealogicznej!";
-            font-size: 24px;
-            horizontal-alignment: center;
-        }
-
-        Text {
-            text: "Wpisz nazwisko:";
-        }
-
-        input := LineEdit {
-            placeholder-text: "Np. Kowalski";
-        }
-
-        Button {
-            text: "Szukaj w bazie";
-            clicked => {
-                root.szukaj-klik(input.text);
-            }
-        }
+    touch := TouchArea {
+        clicked => { root.clicked() }
     }
 
-    // Sygnał, który odbierzemy w Ruście
-    callback szukaj-klik(string);
+    Text {
+        text: root.btn-text;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+export component AppWindow inherits Window {
+    callback run-command(string);
+    title: "Arboretum";
+    width: 600px;
+    height: 450px;
+    no-frame: true; // Ukrywamy systemowe UI
+
+    // Stan konsoli
+    property <bool> console-open: false;
+
+    // Sygnały do obsługi w Rust
+    callback close-requested();
+    callback minimize-requested();
+    callback move-window(); // Specjalny sygnał do przesuwania
+
+    VerticalBox {
+        padding: 0;
+        spacing: 0;
+
+        // --- NASZ WŁASNY PASEK TYTUŁU ---
+        Rectangle {
+            background: #072b47; // Zielony kolor Arboretum
+            height: 40px;
+
+            // Obszar do przesuwania okna (Touch/Mouse)
+            TouchArea {
+                moved => {
+                    // Wymaga logiki w Rust do przesuwania okna
+                    root.move-window();
+                }
+            }
+
+            HorizontalBox {
+                padding: 10px;
+                alignment: space-between;
+
+                Text {
+                    text: "Arboretum";
+                    color: white;
+                    vertical-alignment: center;
+                }
+
+                HorizontalBox {
+                    spacing: 5px;
+                    padding: 0;
+                    
+                    // Przycisk Minimalizuj
+                    MenuButton {                        
+                        btn-text: "_";
+                        clicked => { root.minimize-requested() }
+                    }
+
+                    // Przycisk Zamknij
+                    MenuButton {
+                        btn-text: "X";
+                        clicked => { root.close-requested() }
+                    }
+                }
+            }
+        }
+
+        // 2. GŁÓWNY OBSZAR ROBOCZY (elastyczny)
+        Rectangle {
+            VerticalBox {
+                padding: 20px;
+                Text { text: "Główna zawartość programu"; color: #333; }
+            }
+        }
+
+        // 3. Dolny pasek statusu - ZAWSZE NA DOLE
+        Rectangle {
+            background: #20415a;
+            height: 40px;
+            HorizontalBox {
+                padding-left: 10px; padding-right: 10px;
+                alignment: space-between;
+                Text { text: "SurrealDB: Ready"; color: #aec6cf; }
+                
+                // Dziubek
+                TouchArea {
+                    width: 30px;
+                    clicked => { root.console-open = !root.console-open; }
+                    Text {
+                        text: root.console-open ? "▼" : "▲";
+                        color: white;
+                        horizontal-alignment: center;
+                    }
+                }
+            }
+        }
+        // 4. SZUFLADA (KONSOLA)
+        // Teraz jest "pomiędzy" głównym widokiem a paskiem statusu
+        Rectangle {
+            background: #1e1e1e;
+            height: root.console-open ? 120px : 0px; 
+            clip: true; 
+            animate height { duration: 250ms; easing: ease-in-out; }
+
+            VerticalBox {
+                padding: 10px;
+                cmd_input := LineEdit {
+                    placeholder-text: "Komenda...";
+                    accepted => {
+                        root.run-command(self.text);
+                        self.text = "";
+                    }
+                }
+            }
+        }
+
+        
+    }
 }
